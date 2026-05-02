@@ -1,24 +1,5 @@
-import { View, Text, StyleSheet } from 'react-native';
-import { colors, typography } from '../theme';
+import CitiesScreen from './CitiesScreen';
 
 export default function PlacesScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Places</Text>
-    </View>
-  );
+  return <CitiesScreen />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: typography.sizes.xl,
-    fontFamily: typography.fonts.semibold,
-    color: colors.text,
-  },
-});
