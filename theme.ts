@@ -39,3 +39,7 @@ export const colors = {
     xl: 32,
     xxl: 48,
   };
+  
+  export const layout = {
+    screenPadding: 16,
+  };

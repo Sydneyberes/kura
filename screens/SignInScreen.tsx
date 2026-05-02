@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
 import { supabase } from '../lib/supabase';
-import { colors, typography, spacing } from '../theme';
+import { colors, typography, spacing, layout } from '../theme';
+import Button from '../components/Button';
+import Input from '../components/Input';
 
 export default function SignInScreen({ onSignIn, onGoToSignUp }: { onSignIn: () => void, onGoToSignUp: () => void }) {
   const [email, setEmail] = useState('');
@@ -13,37 +15,39 @@ export default function SignInScreen({ onSignIn, onGoToSignUp }: { onSignIn: () 
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) Alert.alert('Error', error.message);
-    else onSignIn();
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Kura</Text>
-      <Text style={styles.subtitle}>Sign in to continue</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        placeholderTextColor={colors.textMuted}
-        autoCapitalize="none"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        placeholderTextColor={colors.textMuted}
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleSignIn} disabled={loading}>
-        <Text style={styles.buttonText}>{loading ? 'Signing in...' : 'Sign in'}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.link} onPress={onGoToSignUp}>
-        <Text style={styles.linkText}>No account? Create one</Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Kura</Text>
+        <Text style={styles.subtitle}>Sign in to continue</Text>
+        <Input
+          variant="field"
+          placeholder="Email"
+          autoCapitalize="none"
+          keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <Input
+          variant="field"
+          placeholder="Password"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+        <Button
+          label={loading ? 'Signing in...' : 'Sign in'}
+          onPress={handleSignIn}
+          disabled={loading}
+          style={styles.button}
+        />
+        <TouchableOpacity onPress={onGoToSignUp} style={styles.link}>
+          <Text style={styles.linkText}>No account? Create one</Text>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -52,7 +56,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
     justifyContent: 'center',
-    paddingHorizontal: spacing.xl,
+    paddingHorizontal: layout.screenPadding,
   },
   title: {
     fontSize: typography.sizes.display,
@@ -66,27 +70,8 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     marginBottom: spacing.xl,
   },
-  input: {
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 8,
-    padding: spacing.md,
-    fontSize: typography.sizes.md,
-    fontFamily: typography.fonts.regular,
-    color: colors.text,
-    marginBottom: spacing.sm,
-  },
   button: {
-    backgroundColor: colors.accent,
-    borderRadius: 8,
-    padding: spacing.md,
-    alignItems: 'center',
     marginTop: spacing.sm,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: typography.sizes.md,
-    fontFamily: typography.fonts.semibold,
   },
   link: {
     alignItems: 'center',

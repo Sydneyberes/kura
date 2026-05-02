@@ -9,7 +9,8 @@ import TripsScreen from './screens/TripsScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
-import { colors, typography } from './theme';
+import TabBar from './components/TabBar';
+import { colors } from './theme';
 
 const Tab = createBottomTabNavigator();
 
@@ -52,19 +53,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
+        tabBar={(props) => <TabBar {...props} />}
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: colors.accent,
-          tabBarInactiveTintColor: colors.textMuted,
-          tabBarStyle: {
-            backgroundColor: colors.background,
-            borderTopColor: colors.border,
-          },
-          tabBarLabelStyle: {
-            fontSize: typography.sizes.xs,
-            fontWeight: typography.weights.medium,
-            fontFamily: typography.fonts.medium,
-          },
         }}
       >
         <Tab.Screen name="Places" component={PlacesScreen} />
