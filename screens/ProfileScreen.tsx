@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: typography.sizes.xl,
-    fontWeight: typography.weights.semibold,
+    fontFamily: typography.fonts.semibold,
     color: colors.text,
   },
 });

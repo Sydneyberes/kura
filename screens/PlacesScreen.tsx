@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-import { colors, typography, spacing } from '../theme';
+import { colors, typography } from '../theme';
 
 export default function PlacesScreen() {
   return (
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: typography.sizes.xl,
-    fontWeight: typography.weights.semibold,
+    fontFamily: typography.fonts.semibold,
     color: colors.text,
   },
 });
